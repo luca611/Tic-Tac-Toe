@@ -186,12 +186,13 @@ function resetGame() {
         };
     }
     document.getElementById("playerName").innerHTML = "Player 1";
-    playerName = document.getElementById("playerName");
-    playerName.classList.add("orange");
-    playerName.classList.remove("Blue");
     document.getElementById('overlay').classList.toggle("overlay");
     document.getElementById('victory').classList.toggle("hide-message");
     document.getElementById('victory').classList.remove("winning-message");
     adjustBackground();
     deleteConfetti();
+    
+    playerName = document.getElementById("playerName");
+    playerName.classList.add("orange");
+    playerName.classList.remove("Blue");
 }
