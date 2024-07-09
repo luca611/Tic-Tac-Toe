@@ -1,7 +1,10 @@
 let xAction = 0;
 let oAction = 0;
 let isAwin = false;
+
+// Function to set the X or O in the cell
 function set(id) {
+    if (isAwin) return;
     cell = document.getElementById(id);
     if (xAction === oAction) {
         cell.classList.add("x");
@@ -20,6 +23,7 @@ function set(id) {
     fixText();
 }
 
+// Function to adjust the background color
 function adjustBackground() {
     if(xAction === 0) {
         document.body.classList.remove("bodyPlayer2");
@@ -37,20 +41,28 @@ function adjustBackground() {
 
 }
 
+// Function to change the player name and color
 function fixText() {
+    playerName = document.getElementById("playerName");
     if (xAction === oAction) {
-        document.getElementById("turn").innerHTML = "Player 1 it's your turn!";
+        playerName.innerHTML = "Player 1";
+        playerName.classList.add("orange");
+        playerName.classList.remove("Blue");
+
     } else {
-        document.getElementById("turn").innerHTML = "Player 2 it's your turn!";
+        playerName.innerHTML = "Player 2";
+        playerName.classList.add("Blue");
+        playerName.classList.remove("orange");
     }
 
 }
 
+// Function to check if there is a winning combination
 function checkTris() {
     const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
-        [0, 4, 8], [2, 4, 6] // diagonals
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
     ];
 
     const cells = document.getElementsByClassName("cell");
@@ -62,12 +74,30 @@ function checkTris() {
         const cellC = cells[c];
 
         if (cellA.classList.contains("x") && cellB.classList.contains("x") && cellC.classList.contains("x")) {
+            setTimeout(() =>{
+                cellA.classList.add("green");
+            },200);
+            setTimeout(() =>{
+                cellB.classList.add("green");
+            },400);
+            setTimeout(() =>{
+                cellC.classList.add("green");
+            },600);
             // X wins
             isAwin = true;
             showVictory(1);
             return;
         } else if (cellA.classList.contains("o") && cellB.classList.contains("o") && cellC.classList.contains("o")) {
             // O wins
+            setTimeout(() =>{
+                cellA.classList.add("green");
+            },200);
+            setTimeout(() =>{
+                cellB.classList.add("green");
+            },400);
+            setTimeout(() =>{
+                cellC.classList.add("green");
+            },600);
             isAwin = true;
             showVictory(2);
             return;
@@ -82,27 +112,31 @@ function checkTris() {
     }
 }
 
-// Function to show victory message and confetti animation
+// Function to show victory message and confetti animation with a delay
 function showVictory(type) {
-    //just toggling the classes to show the victory message
-    document.getElementById('overlay').classList.toggle("overlay")
-    document.getElementById('Icon');
-    const victory = document.getElementById('victory');
-    victory.classList.toggle("hide-message");
-    victory.classList.toggle("winning-message")
-    msg = document.getElementById('msg');
-    if(type === 1) {
-        Icon.innerHTML = "❌";
-        msg.innerHTML = "Player 1 wins!";
-    } else if(type === 2) {
-        Icon.innerHTML = "⭕";
-        msg.innerHTML = "Player 2 wins!";
-    } else {
-        Icon.innerHTML = "🤝";
-        msg.innerHTML = "It's a draw!";
-    }
-    confettiRain();
+
+    setTimeout(() => {
+        //just toggling the classes to show the victory message
+        document.getElementById('overlay').classList.toggle("overlay")
+        document.getElementById('Icon');
+        const victory = document.getElementById('victory');
+        victory.classList.toggle("hide-message");
+        victory.classList.toggle("winning-message")
+        msg = document.getElementById('msg');
+        if(type === 1) {
+            Icon.innerHTML = "❌";
+            msg.innerHTML = "Player 1 wins!";
+        } else if(type === 2) {
+            Icon.innerHTML = "⭕";
+            msg.innerHTML = "Player 2 wins!";
+        } else {
+            Icon.innerHTML = "🤝";
+            msg.innerHTML = "It's a draw!";
+        }
+        confettiRain();
+    }, 2000);
 }
+
 
 // Function to create confetti animation
 function confettiRain() {
@@ -144,13 +178,15 @@ function resetGame() {
     isAwin = false;
     const cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove("green");
         cells[i].classList.remove("x", "o");
         cells[i].innerHTML = "";
         cells[i].onclick = function() {
             set(cells[i].id);
         };
     }
-    document.getElementById("turn").innerHTML = "Player 1 it's your turn!";
+    document.getElementById("playerName").innerHTML = "Player 1";
+    document.getElementById("playerName").classList.add
     document.getElementById('overlay').classList.toggle("overlay");
     document.getElementById('victory').classList.toggle("hide-message");
     document.getElementById('victory').classList.remove("winning-message");
