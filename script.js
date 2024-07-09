@@ -18,14 +18,14 @@ function set(id) {
         oAction++;
     }
     checkTris();
-    if(isAwin) return;
+    if (isAwin) return;
     adjustBackground();
     fixText();
 }
 
 // Function to adjust the background color
 function adjustBackground() {
-    if(xAction === 0) {
+    if (xAction === 0) {
         document.body.classList.remove("bodyPlayer2");
         cells = document.getElementsByClassName("cell");
         for (let i = 0; i < cells.length; i++) {
@@ -74,30 +74,30 @@ function checkTris() {
         const cellC = cells[c];
 
         if (cellA.classList.contains("x") && cellB.classList.contains("x") && cellC.classList.contains("x")) {
-            setTimeout(() =>{
+            setTimeout(() => {
                 cellA.classList.add("green");
-            },200);
-            setTimeout(() =>{
+            }, 200);
+            setTimeout(() => {
                 cellB.classList.add("green");
-            },400);
-            setTimeout(() =>{
+            }, 400);
+            setTimeout(() => {
                 cellC.classList.add("green");
-            },600);
+            }, 600);
             // X wins
             isAwin = true;
             showVictory(1);
             return;
         } else if (cellA.classList.contains("o") && cellB.classList.contains("o") && cellC.classList.contains("o")) {
             // O wins
-            setTimeout(() =>{
+            setTimeout(() => {
                 cellA.classList.add("green");
-            },200);
-            setTimeout(() =>{
+            }, 200);
+            setTimeout(() => {
                 cellB.classList.add("green");
-            },400);
-            setTimeout(() =>{
+            }, 400);
+            setTimeout(() => {
                 cellC.classList.add("green");
-            },600);
+            }, 600);
             isAwin = true;
             showVictory(2);
             return;
@@ -123,10 +123,10 @@ function showVictory(type) {
         victory.classList.toggle("hide-message");
         victory.classList.toggle("winning-message")
         msg = document.getElementById('msg');
-        if(type === 1) {
+        if (type === 1) {
             Icon.innerHTML = "❌";
             msg.innerHTML = "Player 1 wins!";
-        } else if(type === 2) {
+        } else if (type === 2) {
             Icon.innerHTML = "⭕";
             msg.innerHTML = "Player 2 wins!";
         } else {
@@ -181,12 +181,14 @@ function resetGame() {
         cells[i].classList.remove("green");
         cells[i].classList.remove("x", "o");
         cells[i].innerHTML = "";
-        cells[i].onclick = function() {
+        cells[i].onclick = function () {
             set(cells[i].id);
         };
     }
     document.getElementById("playerName").innerHTML = "Player 1";
-    document.getElementById("playerName").classList.add
+    playerName = document.getElementById("playerName");
+    playerName.classList.add("orange");
+    playerName.classList.remove("Blue");
     document.getElementById('overlay').classList.toggle("overlay");
     document.getElementById('victory').classList.toggle("hide-message");
     document.getElementById('victory').classList.remove("winning-message");
